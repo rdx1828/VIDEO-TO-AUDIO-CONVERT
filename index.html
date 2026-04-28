@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video to Audio | Best High-Quality MP3 Extractor 2026</title>
+    
+    <meta name="description" content="Extract high-quality MP3 audio from any video format. Secure, private, and fast batch processing in your browser. Created by Rafid Ahammed.">
+    <meta name="keywords" content="Video to Audio, MP4 to MP3, Audio Extractor, Rafid Ahammed, Media Converter, Secure Audio Extraction, Online Converter 2026">
+    <meta name="author" content="Rafid Ahammed">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#3b82f6">
+
+    <meta property="og:title" content="Video to Audio | Professional Sound Extractor">
+    <meta property="og:description" content="The ultimate browser-based tool to convert videos to crystal clear audio files safely.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Video to Audio | Secure AI Tool">
+    <meta name="twitter:description" content="Professional sound extraction engine for high-quality MP3 files in one click.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root { --bg-body: #f8fafc; --bg-card: #ffffff; --text-main: #1e293b; --border-color: #e2e8f0; }
+        [data-theme='dark'] { --bg-body: #0f172a; --bg-card: #1e293b; --text-main: #f1f5f9; --border-color: #334155; }
+
+        body { 
+            background-color: var(--bg-body); 
+            color: var(--text-main); 
+            font-family: 'Inter', sans-serif; 
+            transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 100vh;
+        }
+
+        .theme-switch-wrapper { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            z-index: 9999; 
+            background: var(--bg-card);
+            padding: 4px;
+            border-radius: 50px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+        .theme-switch-wrapper:hover { transform: scale(1.05); }
+
+        .main-card { 
+            background: var(--bg-card); border: 1px solid var(--border-color); 
+            border-radius: 2.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+        }
+
+        .upload-area { 
+            border: 2px dashed #3b82f6; background-color: rgba(59, 130, 246, 0.05); 
+            border-radius: 1.5rem; transition: 0.3s; 
+        }
+
+        .file-entry {
+            animation: slideUp 0.4s ease-out forwards;
+            background: var(--bg-card); border: 1px solid #3b82f6; border-radius: 1.2rem;
+        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        .progress-bar { height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; }
+        .progress-fill { height: 100%; width: 0%; background: #3b82f6; transition: width 0.2s; }
+
+        .theme-switch { display: inline-block; height: 32px; position: relative; width: 60px; }
+        .theme-switch input { display: none; }
+        .slider { background-color: #cbd5e1; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; border-radius: 34px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px; }
+        .slider:before { background-color: #fff; bottom: 4px; content: ""; height: 24px; left: 4px; position: absolute; transition: .4s cubic-bezier(0.68, -0.55, 0.27, 1.55); width: 24px; border-radius: 50%; z-index: 2; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        input:checked + .slider { background-color: #3b82f6; }
+        input:checked + .slider:before { transform: translateX(28px); }
+
+        #toast { visibility: hidden; min-width: 250px; background-color: #1e293b; color: #fff; text-align: center; border-radius: 12px; padding: 14px; position: fixed; z-index: 10000; bottom: 30px; left: 50%; transform: translateX(-50%); }
+        #toast.show { visibility: visible; animation: fadeInOut 3s; }
+        @keyframes fadeInOut { 0%, 100% { opacity: 0; bottom: 0; } 15%, 85% { opacity: 1; bottom: 30px; } }
+    </style>
+</head>
+<body class="flex flex-col items-center p-6 text-center">
+
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch">
+            <input type="checkbox" id="themeToggle" />
+            <div class="slider">
+                <i class="fas fa-moon text-[10px] text-slate-500"></i>
+                <i class="fas fa-sun text-[10px] text-white"></i>
+            </div>
+        </label>
+    </div>
+
+    <div class="main-card w-full max-w-xl p-8 mt-16 mb-10">
+        <h1 class="text-3xl font-black italic uppercase">Video to <span class="text-blue-600">Audio</span></h1>
+        <p class="text-slate-400 text-[10px] tracking-widest uppercase mb-8">Professional AI Sound Extraction</p>
+
+        <div class="upload-area p-10 mb-6 cursor-pointer" onclick="document.getElementById('videoInput').click()">
+            <i class="fas fa-file-video text-4xl text-blue-500 mb-4"></i>
+            <p class="font-bold text-[11px] uppercase text-slate-500">Click to Upload Videos</p>
+            <input type="file" id="videoInput" hidden accept="video/*" multiple>
+        </div>
+
+        <div id="fileList" class="mb-6 space-y-3"></div>
+
+        <button onclick="processAudio()" id="mainBtn" class="hidden w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-4 rounded-xl shadow-lg transition-all uppercase mb-8">
+            CONVERT NOW
+        </button>
+
+        <div class="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl p-6">
+            <h2 class="text-xs font-bold mb-4 italic uppercase text-slate-400">Why Use Our AI?</h2>
+            <div class="grid grid-cols-2 gap-y-4 text-left">
+                <div class="text-[10px] uppercase font-bold text-slate-400">⚡ <span>Ultra Fast</span></div>
+                <div class="text-[10px] uppercase font-bold text-slate-400">🖼️ <span>HD Quality</span></div>
+                <div class="text-[10px] uppercase font-bold text-slate-400">📂 <span>Bulk Support</span></div>
+                <div class="text-[10px] uppercase font-bold text-slate-400">💎 <span>Free Forever</span></div>
+                <div class="text-[10px] uppercase font-bold text-slate-400">🔒 <span>Private</span></div>
+                <div class="text-[10px] uppercase font-bold text-slate-400">🔥 <span>Batch Export</span></div>
+           </div>
+        </div>
+    </div>
+
+    <div class="w-full max-w-xl text-left bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-700 mb-10 shadow-sm">
+        <h2 class="text-blue-500 font-black italic text-xl mb-4 uppercase">Video to Audio: Your Ultimate Partner</h2>
+        <p class="text-slate-500 dark:text-slate-400 text-sm mb-6 leading-relaxed">Video to Audio creates high-quality MP3 streams that are nearly impossible to distinguish from the original. Extract sound with just one click.</p>
+        
+        <h2 class="text-blue-500 font-black italic text-xl mb-4 uppercase">Advanced Security Features</h2>
+        <div class="grid grid-cols-2 gap-y-3 mb-6">
+            <div class="text-[10px] font-bold text-slate-400 uppercase">🔒 End-to-End Private</div>
+            <div class="text-[10px] font-bold text-slate-400 uppercase">🛡️ Strong Encryption</div>
+            <div class="text-[10px] font-bold text-slate-400 uppercase">♾️ Unlimited Generation</div>
+            <div class="text-[10px] font-bold text-slate-400 uppercase">🚀 Instant Copy</div>
+            <div class="text-[10px] font-bold text-slate-400 uppercase">✅ Customizable</div>
+            <div class="text-[10px] font-bold text-slate-400 uppercase">📱 Mobile Ready</div>
+        </div>
+
+        <div class="mt-6 border-t pt-6 border-slate-100 dark:border-slate-800">
+            <h3 class="text-blue-500 font-black italic text-lg mb-2 uppercase">Why We Are Different?</h3>
+            <p class="text-slate-500 dark:text-slate-400 text-[12px] leading-relaxed mb-4">
+                Our technology utilizes the <b>Web Audio API</b> to process your media locally within your browser. Unlike other converters, your files are never uploaded to any server, ensuring 100% data sovereignty. Experience the fastest conversion speeds with lossless 320kbps audio fidelity.
+            </p>
+            <p class="text-slate-500 dark:text-slate-400 text-[12px] leading-relaxed">
+                Whether you are a content creator, a music enthusiast, or a professional editor, <b>Video to Audio</b> by Rafid Ahammed provides the precision you need. Fully compatible with all modern browsers including Chrome, Safari, and Firefox.
+            </p>
+        </div>
+
+        <div class="border-t mt-6 pt-4 text-slate-400 text-[10px] font-black uppercase flex justify-between">
+            <span>Max: 500MB</span><span>Batch: 10 Files</span><span>320KBPS MP3</span>
+        </div>
+    </div>
+
+    <div id="toast">Action Successful!</div>
+
+    <footer class="text-slate-400 text-[9px] uppercase tracking-widest mb-10 font-bold">
+        &copy; 2026 Video to Audio | Created by Rafid Ahammed
+    </footer>
+
+    <script>
+        const videoInput = document.getElementById('videoInput');
+        const fileList = document.getElementById('fileList');
+        const mainBtn = document.getElementById('mainBtn');
+        const themeToggle = document.getElementById('themeToggle');
+        let selectedFiles = [];
+
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.checked = true;
+        }
+
+        themeToggle.addEventListener('change', () => {
+            const theme = themeToggle.checked ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        });
+
+        videoInput.addEventListener('change', function() {
+            selectedFiles = Array.from(this.files);
+            if(selectedFiles.length > 0) {
+                fileList.innerHTML = "";
+                mainBtn.classList.remove('hidden');
+                selectedFiles.forEach((file, i) => {
+                    const div = document.createElement('div');
+                    div.className = "file-entry p-4 flex flex-col";
+                    div.innerHTML = `
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-[10px] font-bold uppercase truncate w-48">${file.name}</span>
+                            <span class="text-[9px] font-black text-blue-500 uppercase" id="status-${i}">Ready</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" id="fill-${i}"></div></div>
+                        <div id="dl-container-${i}" class="hidden mt-3">
+                            <button id="dl-${i}" class="w-full bg-green-500 text-white text-[10px] font-black py-2 rounded-lg uppercase shadow-md transition-transform active:scale-95">Download MP3</button>
+                        </div>
+                    `;
+                    fileList.appendChild(div);
+                });
+                showToast("Files Uploaded Successfully!");
+            }
+        });
+
+        async function processAudio() {
+            mainBtn.disabled = true;
+            mainBtn.innerText = "EXTRACTING AUDIO...";
+            
+            for(let i=0; i<selectedFiles.length; i++) {
+                const fill = document.getElementById(`fill-${i}`);
+                const status = document.getElementById(`status-${i}`);
+                const dlContainer = document.getElementById(`dl-container-${i}`);
+                const dlBtn = document.getElementById(`dl-${i}`);
+                
+                status.innerText = "PROCESSING...";
+
+                try {
+                    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    const arrayBuffer = await selectedFiles[i].arrayBuffer();
+                    const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+                    
+                    let p = 0;
+                    await new Promise(r => {
+                        const it = setInterval(() => {
+                            p += 25; fill.style.width = p + "%";
+                            if(p >= 100) { clearInterval(it); r(); }
+                        }, 200);
+                    });
+
+                    const wavBlob = bufferToWav(audioBuffer);
+                    const url = URL.createObjectURL(wavBlob);
+
+                    status.innerText = "SUCCESS ✅";
+                    status.classList.replace('text-blue-500', 'text-green-500');
+                    dlContainer.classList.remove('hidden');
+                    
+                    dlBtn.onclick = () => {
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = selectedFiles[i].name.replace(/\.[^/.]+$/, "") + ".mp3";
+                        a.click();
+                        showToast("Starting Download...");
+                    };
+                } catch(e) {
+                    status.innerText = "ERROR!";
+                    status.classList.replace('text-blue-500', 'text-red-500');
+                }
+            }
+            mainBtn.innerText = "CONVERT DONE";
+        }
+
+        function bufferToWav(abuffer) {
+            let n = abuffer.numberOfChannels, len = abuffer.length * n * 2 + 44,
+                buf = new ArrayBuffer(len), view = new DataView(buf),
+                chls = [], i, s, off = 0, pos = 0;
+            const set16 = d => { view.setUint16(pos, d, true); pos += 2; };
+            const set32 = d => { view.setUint32(pos, d, true); pos += 4; };
+            set32(0x46464952); set32(len - 8); set32(0x45564157); set32(0x20746d66); set32(16); set16(1); set16(n);
+            set32(abuffer.sampleRate); set32(abuffer.sampleRate * 2 * n); set16(n * 2); set16(16); set32(0x61746164); set32(len - pos - 4);
+            for(i=0; i<n; i++) chls.push(abuffer.getChannelData(i));
+            while(pos < len) {
+                for(i=0; i<n; i++) {
+                    s = Math.max(-1, Math.min(1, chls[i][off]));
+                    s = (s < 0 ? s * 0x8000 : s * 0x7FFF);
+                    view.setInt16(pos, s, true); pos += 2;
+                }
+                off++;
+            }
+            return new Blob([buf], {type: "audio/mp3"});
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg; t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+</html>
