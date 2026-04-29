@@ -1,0 +1,13 @@
+# Standard Robots.txt for https://rdx1828.github.io/VIDEO-TO-AUDIO-CONVERT/
+User-agent: *
+Allow: /
+
+# Optimization for Search Engines
+Allow: /index.html
+Allow: /assets/
+
+# Crawl Delay to prevent server overload (optional for GitHub Pages)
+Crawl-delay: 1
+
+# Link to the Sitemap
+Sitemap: https://rdx1828.github.io/VIDEO-TO-AUDIO-CONVERT/sitemap.xml
